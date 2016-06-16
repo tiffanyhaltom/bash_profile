@@ -42,7 +42,7 @@
 
     # NODE_PATH
     # Node Path from Homebrew I believe
-    export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
+    # export NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
 
     # Those NODE & Python Paths won't break anything even if you
     # don't have NODE or Python installed. Eventually you will and
@@ -57,10 +57,10 @@
     # Editors
     # Tells your shell that when a program requires various editors, use sublime.
     # The -w flag tells your shell to wait until sublime exits
-    export VISUAL="subl -w"
-    export SVN_EDITOR="subl -w"
-    export GIT_EDITOR="subl -w"
-    export EDITOR="subl -w"
+#    export VISUAL="subl -w"
+#    export SVN_EDITOR="subl -w"
+    # export GIT_EDITOR="subl -w"
+    # export EDITOR="subl -w"
 
   # Paths
 
@@ -86,7 +86,7 @@
     # it will try to find that command within a directory that is defined in our PATH.
     # Read http://blog.seldomatt.com/blog/2012/10/08/bash-and-the-one-true-path/ for more on that.
     export PATH="$USR_PATHS:$PATH"
-
+    export PATH=$PATH:.
     # If you go into your shell and type: $PATH you will see the output of your current path.
     # For example, mine is:
     # /Users/avi/.rvm/gems/ruby-1.9.3-p392/bin:/Users/avi/.rvm/gems/ruby-1.9.3-p392@global/bin:/Users/avi/.rvm/rubies/ruby-1.9.3-p392/bin:/Users/avi/.rvm/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/mysql/bin:/usr/local/share/python:/bin:/usr/sbin:/sbin:
@@ -153,8 +153,8 @@ function extract () {
   alias gcam="git commit -am"
   alias gbb="git branch -b"
   alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+  if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
   fi
 
 # Case-Insensitive Auto Completion
@@ -180,5 +180,14 @@ fi
  
 
 export PROJECT_HOME=~/Development
-export WORKON_HOME=~/ENV
-source /usr/local/bin/virtualenvwrapper.sh  
+export WORKON_HOME=~/ENVsf
+
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/thaltom/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
+$(boot2docker shellinit 2> /dev/null)
+
+alias fig="docker run -v /var/run/docker.sock:/run/docker.sock -v \$PWD:$PWD -w $PWD --rm -it build.learnvest.net:5000/lv fig"
+
+source ~/.profile
